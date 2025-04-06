@@ -1,0 +1,57 @@
+openapi: 3.0.1
+info:
+  version: "1.0"
+  title: "List subscriptions"
+  description: |
+   This API fetches subscriptions related to logged-in customer
+paths:
+  /store/customers/me/subscriptions:
+    get:
+      tags:
+      - "subscription"
+      summary: "Fetch subscriptions"
+      responses:
+        "200":
+          description: "Returns list of subscriptions"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                    $ref: '#/components/schemas/Subscription'
+        "400":
+          description: "Not OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    
+components:
+  schemas:
+    Subscription:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum: [active, canceled, expired, failed, payment_waiting, force_cancelled]
+        interval:
+          type: string
+          enum: [monthly]
+        subscription_date:
+          type: string
+        last_order_date:
+          type: string
+        expiration_date:
+          type: string
+        period:
+          type: number
+        metadata:
+          type: object
+          properties:
+            external_subscription_id:
+              type: string

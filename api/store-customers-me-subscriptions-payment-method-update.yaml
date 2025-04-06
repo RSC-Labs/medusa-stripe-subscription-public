@@ -1,0 +1,46 @@
+openapi: 3.0.1
+info:
+  version: "1.0"
+  title: "Payment method update"
+  description: |
+   This API creates link to portal where customer can update payment method
+paths:
+  /store/customers/me/subscriptions/payment-method-update:
+    post:
+      tags:
+      - "subscription"
+      summary: "Account holder with portal link"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                return_url:
+                  type: string
+      responses:
+        "200":
+          description: "Returns account holder with link to the portal"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accountHolderData:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          target_url:
+                            type: string
+        "400":
+          description: "Not OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string

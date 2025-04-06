@@ -1,0 +1,38 @@
+openapi: 3.0.1
+info:
+  version: "1.0"
+  title: "Cancel subscription"
+  description: |
+   This API cancels subscription
+paths:
+  /store/customers/me/subscriptions/{id}/cancel:
+    post:
+      tags:
+      - "subscription"
+      summary: "Cancelling subscription and returns account holder"
+      parameters:
+      - name: id
+        in: path
+        description: Subscription ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns account holder"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accountHolderData:
+                    type: object
+        "400":
+          description: "Not OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string

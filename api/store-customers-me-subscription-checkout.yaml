@@ -1,0 +1,38 @@
+openapi: 3.0.1
+info:
+  version: "1.0"
+  title: "Checkout subscription"
+  description: |
+   This API continue checkout if not ended in 24 hours.
+paths:
+  /store/customers/me/subscriptions/{id}/checkout:
+    post:
+      tags:
+      - "subscription"
+      summary: "Returns url to Stripe checkout page"
+      parameters:
+      - name: id
+        in: path
+        description: Subscription ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "Returns URL"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  checkoutSessionUrl:
+                    type: string
+        "400":
+          description: "Not OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string

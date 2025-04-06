@@ -1,0 +1,46 @@
+openapi: 3.0.1
+info:
+  version: "1.0"
+  title: "Customer portal"
+  description: |
+   This API creates link to customer portal and return account holder with the link
+paths:
+  /store/customers/me/subscriptions/portal:
+    post:
+      tags:
+      - "subscription"
+      summary: "Account holder with portal link"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                return_url:
+                  type: string
+      responses:
+        "200":
+          description: "Returns account holder with link to the portal"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accountHolderData:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          target_url:
+                            type: string
+        "400":
+          description: "Not OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string

@@ -1,0 +1,70 @@
+openapi: 3.0.1
+info:
+  version: "1.0"
+  title: "Complete cart subscription"
+  description: |
+   This API completes cart as a subscription
+paths:
+  /store/carts/{id}/complete-subscription:
+    post:
+      tags:
+      - "subscription"
+      summary: "Completes cart as a subscription"
+      parameters:
+      - name: id
+        in: path
+        description: Cart ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "201":
+          description: "Returns information about cart, order and checkout"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscription:
+                    $ref: '#/components/schemas/Subscription'
+                  order:
+                    type: object
+                  stripeCheckoutSessionId:
+                    type: string
+                      
+        "400":
+          description: "Not OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    
+components:
+  schemas:
+    Subscription:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum: [active, canceled, expired, failed, payment_waiting, force_cancelled]
+        interval:
+          type: string
+          enum: [monthly]
+        subscription_date:
+          type: string
+        last_order_date:
+          type: string
+        expiration_date:
+          type: string
+        period:
+          type: number
+        metadata:
+          type: object
+          properties:
+            external_subscription_id:
+              type: string
