@@ -14,11 +14,15 @@ Please raise an issue in Github issues.
 
 ## Installation
 
+**Info**
+
+This plugin is supported from `2.6.2` release of MedusaJS. If `2.6.2` is not yet available, you can use some of the snapshots, e.g. `2.6.2-snapshot-20250310153842`.
+
 1. Install plugin by adding to your `package.json`:
 
 ```json
 ...
-"@rsc-labs/medusa-stripe-subscription": "1.0.0" // or other available version
+"@rsc-labs/medusa-stripe-subscription": "0.1.0" // or other available version
 ...
 ```
 and execute install, e.g. `yarn install`.
@@ -27,13 +31,23 @@ and execute install, e.g. `yarn install`.
 
 ```js
 ...
- modules: [
+  plugins: [
+    {
+      resolve: "@rsc-labs/medusa-stripe-subscription",
+      options: {
+        apiKey: <stripe-api-key>,
+        webhookSecret: <stripe-webhook-secret>
+        licenceKey: <licence-key>
+      },
+    }
+  ],
+  modules: [
     {
       resolve: "@medusajs/medusa/payment",
       options: {
         providers: [
           {
-            resolve: "@rsc-labs/medusa-stripe-subscription",
+            resolve: "@rsc-labs/medusa-stripe-subscription/providers/stripe-subscription",
             id: "stripe-subscription",
             options: {
               apiKey: <stripe-api-key>,
@@ -43,26 +57,11 @@ and execute install, e.g. `yarn install`.
           }
         ]
       },
+    },
 ...
 ```
 
 All options are required. Stripe API Key and Stripe Webhook Secret you can get from your Stripe Dashboard.
-
-3. Due to: https://github.com/medusajs/medusa/issues/11248 you need also add following configuration to `medusa-config.js`:
-```js
-admin: {
-  vite: () => {
-    return {
-      optimizeDeps: {
-        include: ["@emotion/react", "@mui/material"]
-      },
-    };
-  },
-},
-projectConfig: {
-  ...
-}
-```
 
 ### Database migration
 
